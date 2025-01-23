@@ -7,6 +7,10 @@ on:
         required: true
         type: string
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   check-new-version:
     name: Check for new IBKR stable/latest versions

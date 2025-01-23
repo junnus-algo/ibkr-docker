@@ -5,7 +5,7 @@ ENV IBC_VERSION=3.20.0
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
     ca-certificates git libxtst6 libgtk-3-0 openbox procps python3 socat tigervnc-standalone-server unzip wget2 xterm \
-    # https://github.com/extrange/ibkr-docker/issues/74
+    # https://github.com/junnus-algo/ibkr-docker/issues/74
     libasound2 \
     libnss3 \
     libgbm1 \
@@ -27,11 +27,11 @@ RUN wget2 https://github.com/IbcAlpha/IBC/releases/download/${IBC_VERSION}/IBCLi
 ENV INSTALL_FILENAME="ibgateway-10.33.1e-standalone-linux-x64.sh"
 
 # Fetch hashes
-RUN wget2 "https://github.com/extrange/ibkr-docker/releases/download/10.33.1e-latest/ibgateway-10.33.1e-standalone-linux-x64.sh.sha256" \
+RUN wget2 "https://github.com/junnus-algo/ibkr-docker/releases/download/10.33.1e-latest/ibgateway-10.33.1e-standalone-linux-x64.sh.sha256" \
     -O hash
 
 # Download IB Gateway (which contains TWS) and check hashes
-RUN wget2 "https://github.com/extrange/ibkr-docker/releases/download/10.33.1e-latest/ibgateway-10.33.1e-standalone-linux-x64.sh" \
+RUN wget2 "https://github.com/junnus-algo/ibkr-docker/releases/download/10.33.1e-latest/ibgateway-10.33.1e-standalone-linux-x64.sh" \
     -O "$INSTALL_FILENAME" \
     && sha256sum -c hash \
     && chmod +x "$INSTALL_FILENAME" \
