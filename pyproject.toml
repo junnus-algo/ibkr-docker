@@ -3,7 +3,7 @@ name = "ibkr-docker"
 version = "0.1.0"
 description = "Default template for PDM package"
 authors = [
-    {name = "extrange", email = "29305375+extrange@users.noreply.github.com"},
+    {name = "junnus-algo", email = "29305375+junnus-algo@users.noreply.github.com"},
 ]
 dependencies = [
     "pytest>=8.2.1",

@@ -51,7 +51,7 @@ docker run -d \
   --ulimit nofile=10000 \
   -e USERNAME=your_username \
   -e PASSWORD=your_password \
-  ghcr.io/extrange/ibkr:latest
+  ghcr.io/junnus-algo/ibkr:latest
 ```
 
 ### Using `docker compose` (recommended)
@@ -70,7 +70,7 @@ PASSWORD='<your IBKR password>'
 ---
 services:
   ibkr:
-    image: ghcr.io/extrange/ibkr # latest, stable, 10.21, 10.21.1p etc
+    image: ghcr.io/junnus-algo/ibkr # latest, stable, 10.21, 10.21.1p etc
     ports:
       - "127.0.0.1:6080:6080" # noVNC browser access
       - "127.0.0.1:8888:8888" # API access
@@ -175,9 +175,9 @@ Set the environment variable `IBC_TradingMode` to `paper` or `live`.
 - A PR with the updated `Dockerfile` (obtained by running `build.sh <latest/stable> <version>`) is automatically created
 - I test the updated configuration (both IB Gateway/TWS)
 - I then manually merge the PR, and tag the resulting commit with `git tag docker-<version>-<latest/stable>`
-- Pushing the tag triggers a docker build action (`publish.yml`, based on the `docker-` prefix), which reads the version and release channel (latest/stable) from the tag, and then fetches the repo at the tag's commit, builds from the appropriate folder (latest/stable), tags and pushes the image to [ghcr.io/extrange/ibkr][images].
+- Pushing the tag triggers a docker build action (`publish.yml`, based on the `docker-` prefix), which reads the version and release channel (latest/stable) from the tag, and then fetches the repo at the tag's commit, builds from the appropriate folder (latest/stable), tags and pushes the image to [ghcr.io/junnus-algo/ibkr][images].
 
-[images]: https://github.com/extrange/ibkr-docker/pkgs/container/ibkr
+[images]: https://github.com/junnus-algo/ibkr-docker/pkgs/container/ibkr
 [tws-api]: https://interactivebrokers.github.io/tws-api/introduction.html
 [ibc-alpha]: https://github.com/IbcAlpha
 [config.ini]: https://github.com/IbcAlpha/IBC/blob/master/resources/config.ini
@@ -187,4 +187,4 @@ Set the environment variable `IBC_TradingMode` to `paper` or `live`.
 [ibgateway]: https://www.interactivebrokers.com/en/trading/ibgateway-stable.php
 [tws-vs-gateway]: https://stackoverflow.com/questions/32778954/interactive-brokers-api-trader-workstation-tws-vs-ib-gateway
 [tws-ports]: https://www.interactivebrokers.com/en/?f=%2Fen%2Fgeneral%2Ftws-notes-954.php
-[tws-api-issue]: https://github.com/extrange/ibkr-docker/issues/16#issuecomment-1514830115
+[tws-api-issue]: https://github.com/junnus-algo/ibkr-docker/issues/16#issuecomment-1514830115
