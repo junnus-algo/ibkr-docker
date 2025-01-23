@@ -15,8 +15,8 @@ jobs:
     with:
       channel: stable
 
-  latest:
-    name: Check latest release
-    uses: ./.github/workflows/detect-releases.yml
-    with:
-      channel: latest
+  # latest:
+  #   name: Check latest release
+  #   uses: ./.github/workflows/detect-releases.yml
+  #   with:
+  #     channel: latest
