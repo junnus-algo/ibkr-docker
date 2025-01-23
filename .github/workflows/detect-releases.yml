@@ -96,11 +96,11 @@ jobs:
           # By itself, will not trigger docker.yml action due to Github restrictions
           tagging_message: ${{ needs.check-new-version.outputs.tag }}
 
-  build:
-    name: Trigger Docker Build Action
-    needs:
-      - test-and-commit
-      - check-new-version
-    uses: ./.github/workflows/docker.yml
-    with:
-      tag: ${{ needs.check-new-version.outputs.tag }}
+  # build:
+  #   name: Trigger Docker Build Action
+  #   needs:
+  #     - test-and-commit
+  #     - check-new-version
+  #   uses: ./.github/workflows/docker.yml
+  #   with:
+  #     tag: ${{ needs.check-new-version.outputs.tag }}
