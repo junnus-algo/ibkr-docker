@@ -8,6 +8,7 @@
     - [Using `docker run`](#using-docker-run)
     - [Using `docker compose` (recommended)](#using-docker-compose-recommended)
     - [Environment Variables](#environment-variables)
+      - [AWS Secrets Manager Integration](#aws-secrets-manager-integration)
   - [Docker Images](#docker-images)
   - [FAQ](#faq)
     - [How do I save TWS settings locally?](#how-do-i-save-tws-settings-locally)
@@ -104,6 +105,10 @@ View at [localhost:6080](http://localhost:6080).
 | `GATEWAY_OR_TWS`       | What to start, either `tws` or `gateway`                         | `tws`      |
 | `TWOFA_TIMEOUT_ACTION` | [2FA timeout action][twofa-timeout]. Either `restart` or `exit`. | `restart`  |
 | `TWS_SETTINGS_PATH`    | (optional) Path to store TWS settings (see FAQ)                  |            |
+| `AWS_SECRET_ID`         | (optional, required if not providing USERNAME/PASSWORD) AWS Secrets Manager secret ID containing IBKR credentials          |            |
+| `AWS_REGION`           | (optional, required if providing AWS_SECRET_ID) AWS region for Secrets Manager                                   |            |
+| `AWS_ACCESS_KEY_ID`    | (optional, required if providing AWS_SECRET_ID) AWS access key              |            |
+| `AWS_SECRET_ACCESS_KEY`| (optional, required if providing AWS_SECRET_ID) AWS secret key              |            |
 
 Variables prefixed with `IBC_` will override settings in [IBCAlpha][ibc-alpha]'s `config.ini`, e.g.:
 
@@ -113,6 +118,28 @@ Variables prefixed with `IBC_` will override settings in [IBCAlpha][ibc-alpha]'s
 - etc.
 
 See possible values [here][config.ini].
+
+#### AWS Secrets Manager Integration
+The container supports retrieving credentials from AWS Secrets Manager as an alternative to environment variables:
+Option 1: Provide IBKR credentials as environment variables directly in docker-compose.yml
+   ```yaml
+   environment:
+     USERNAME: ib-username
+     PASSWORD: ib-password
+   ```
+
+Option 2: Provide AWS Secrets Manager secret ID, region, access key, and secret key in docker-compose.yml
+   ```yaml
+   environment:
+     AWS_SECRET_ID: your-secret-id
+     AWS_REGION: your-aws-region
+     AWS_ACCESS_KEY_ID: your-access-key
+     AWS_SECRET_ACCESS_KEY: your-secret-key
+   ```
+  The container will automatically:
+  - Install AWS CLI if missing
+  - Retrieve and parse the secret
+  - Prioritize AWS credentials over direct environment variables
 
 ## Docker Images
 

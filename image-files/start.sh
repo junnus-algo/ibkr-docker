@@ -61,8 +61,39 @@ TWS_MAJOR_VERSION=$(ls ~/Jts/ibgateway/.)
 # so we need to supply it here. The rest of the arguments can be read from
 # the config.ini file.
 
+# Try to get credentials from env vars or AWS Secrets Manager
+username="${USERNAME:-}"
+password="${PASSWORD:-}"
+if [[ -z "$username" || -z "$password" ]]; then
+    # Install AWS CLI if not available
+    if ! command -v aws >/dev/null 2>&1; then
+        echo "Installing AWS CLI..."
+        apt-get update && apt-get install -y awscli
+    fi
+    # Configure AWS credentials if provided
+    if [[ -n "${AWS_ACCESS_KEY_ID:-}" && 
+          -n "${AWS_SECRET_ACCESS_KEY:-}" &&
+          -n "${AWS_REGION:-}" &&
+          -n "${AWS_SECRET_ID:-}" ]]; then
+        export AWS_ACCESS_KEY_ID
+        export AWS_SECRET_ACCESS_KEY
+    fi
+    # Try to fetch from Secrets Manager
+    echo "Attempting to fetch credentials from AWS Secrets Manager..."
+    secret_json=$(aws secretsmanager get-secret-value \
+        --secret-id "${AWS_SECRET_ID}" \
+        --region "${AWS_REGION}" \
+        --query SecretString \
+        --output text 2>/dev/null || echo '')
+    
+    if [[ -n "$secret_json" ]]; then
+        [[ -z "$username" ]] && username=$(echo "$secret_json" | grep -o '"username":"[^"]*' | cut -d'"' -f4)
+        [[ -z "$password" ]] && password=$(echo "$secret_json" | grep -o '"password":"[^"]*' | cut -d'"' -f4)
+    fi
+fi
+
 exec /opt/ibc/scripts/ibcstart.sh "${TWS_MAJOR_VERSION}" $command \
-    "--user=${USERNAME:-}" \
-    "--pw=${PASSWORD:-}" \
+    "--user=${username}" \
+    "--pw=${password}" \
     "--on2fatimeout=${TWOFA_TIMEOUT_ACTION:-restart}" \
     "--tws-settings-path=${TWS_SETTINGS_PATH:-}"
