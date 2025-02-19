@@ -51,7 +51,7 @@ docker run -d \
   --ulimit nofile=10000 \
   -e USERNAME=your_username \
   -e PASSWORD=your_password \
-  ghcr.io/extrange/ibkr:latest
+  ghcr.io/junnus-algo/ibkr:latest
 ```
 
 ### Using `docker compose` (recommended)
@@ -70,7 +70,7 @@ PASSWORD='<your IBKR password>'
 ---
 services:
   ibkr:
-    image: ghcr.io/extrange/ibkr # latest, stable, 10.21, 10.21.1p etc
+    image: ghcr.io/junnus-algo/ibkr # latest, stable, 10.21, 10.21.1p etc
     ports:
       - "127.0.0.1:6080:6080" # noVNC browser access
       - "127.0.0.1:8888:8888" # API access

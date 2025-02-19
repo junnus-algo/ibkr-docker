@@ -35,7 +35,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/extrange/ibkr
+          images: ghcr.io/junnus-algo/ibkr
           flavor: |
             latest=false
 
