@@ -8,15 +8,25 @@ on:
 
   workflow_dispatch:
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   stable:
     name: Check stable release
     uses: ./.github/workflows/detect-releases.yml
+    permissions:
+      contents: write
+      packages: write
     with:
       channel: stable
 
   latest:
     name: Check latest release
     uses: ./.github/workflows/detect-releases.yml
+    permissions:
+      contents: write
+      packages: write
     with:
       channel: latest
